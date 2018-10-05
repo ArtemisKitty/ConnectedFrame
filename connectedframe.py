@@ -33,7 +33,7 @@ def resize_images():
 
 	for file in images:
 		img = Image.open(file)
-		img = img.resize((640, 480), Image.ANTIALIAS)
+		img = img.resize((1920, 1080), Image.ANTIALIAS)
 		img.save(file, "JPEG")
 
 def list_images():
@@ -123,15 +123,15 @@ def send_event():
 
 root = Tk()
 root.title('Connected Frame')
-root.geometry('{}x{}'.format(800, 480))
+root.geometry('{}x{}'.format(1920, 1080))
 root.attributes("-fullscreen", True)
 root.config(cursor='none')
 
 initialize()
 
-left_column = Frame(root, bg='black', width=80, height=480)
-center_column = Frame(root, bg='black', width=640, height=480)
-right_column = Frame(root, bg='black', width=80, height=480)
+left_column = Frame(root, bg='black', width=80, height=1080)
+center_column = Frame(root, bg='black', width=1920, height=1080)
+right_column = Frame(root, bg='black', width=80, height=1080)
 
 left_column.pack_propagate(0)
 center_column.pack_propagate(0)
