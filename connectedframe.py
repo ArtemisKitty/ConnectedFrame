@@ -5,7 +5,7 @@ from os import putenv, getenv, system
 from PIL import Image, ImageTk 
 from glob import glob
 
-dropbox_link = getenv("DROPBOX_LINK")
+dropbox_link = getenv("https://www.dropbox.com/sh/7uaqqjrnjznn4lc/AABaadoQfvM0JQq9sc9ulaiSa?dl=1")
 download_interval = int(getenv("DOWNLOAD_INTERVAL_HOURS")) * 60 * 60 * 1000
 carousel_interval = int(getenv("CAROUSEL_INTERVAL_SECONDS")) * 1000
 frame_owner = getenv("FRAME_OWNER")
@@ -39,7 +39,7 @@ def resize_images():
 def list_images():
 	images = []
 
-	dir = base_path + "*.jpg"
+	dir = base_path + "*.jpg","*.png"
 
 	images = glob(dir)
 
@@ -68,11 +68,11 @@ def next_image():
 	update_image(image_path)
 
 def play_pause():
-	global carrousel_status
+	global carousel_status
 
-	carrousel_status = not carrousel_status
+	carousel_status = not carousel_status
 
-	if(carrousel_status):
+	if(carousel_status):
 		img = ImageTk.PhotoImage(Image.open("/usr/src/app/icons/pause.png"))
 	else:
 		img = ImageTk.PhotoImage(Image.open("/usr/src/app/icons/play.png"))
@@ -80,11 +80,11 @@ def play_pause():
 	play_button.configure(image=img)
 	play_button.image = img
 
-def carrousel():
-	if(carrousel_status):
+def carousel():
+	if(carousel_status):
 		next_image()
 
-	root.after(carousel_interval, carrousel)
+	root.after(carousel_interval, carousel)
 
 def update_image(image_path):
 	img = ImageTk.PhotoImage(Image.open(image_path))
@@ -96,15 +96,15 @@ def update_image(image_path):
 	like_button.image = img
 
 def initialize():
-	global image_list, carrousel_status, initial_init
-	current_carrousel_status = carrousel_status
-	carrousel_status = False
+	global image_list, carousel_status, initial_init
+	current_carousel_status = carousel_status
+	carousel_status = False
 
 	download_images(dropbox_link)
 	resize_images()
 	image_list = list_images()
 
-	carrousel_status = current_carrousel_status
+	carousel_status = current_carousel_status
 
 	if(initial_init):
 		initial_init = False
@@ -129,9 +129,9 @@ root.config(cursor='none')
 
 initialize()
 
-left_column = Frame(root, bg='black', width=80, height=1080)
+left_column = Frame(root, bg='black', width=0, height=1080)
 center_column = Frame(root, bg='black', width=1920, height=1080)
-right_column = Frame(root, bg='black', width=80, height=1080)
+right_column = Frame(root, bg='black', width=0, height=1080)
 
 left_column.pack_propagate(0)
 center_column.pack_propagate(0)
@@ -161,6 +161,6 @@ center_label.pack(side="bottom", fill=BOTH, expand=1)
 play_button.pack(fill=BOTH, expand=1)
 like_button.pack(fill=BOTH, expand=1)
 
-carrousel()
+carousel()
 
 root.mainloop()
