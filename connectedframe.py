@@ -12,7 +12,7 @@ frame_owner = getenv("FRAME_OWNER")
 ifttt_key = getenv("IFTTT_KEY")
 
 base_path = "/usr/src/app/images/"
-carrousel_status = True
+carousel_status = True
 image_index = 0
 image_list = []
 initial_init = True
